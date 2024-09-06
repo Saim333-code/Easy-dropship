@@ -6,6 +6,7 @@ import { useSelector } from "react-redux";
 import BasicLoader from "./basicLoader";
 import { toast } from "react-toastify";
 import { useRouter } from "next/navigation";
+import LoadingOverlay from "./bottomLoader";
 export default function UserDashboard() {
 const [pendingOrdersTotal,setpendingOrdersTotal]=useState(0)
 const [placedOrdersTotal,setPlacedOrdersTotal]=useState(0)
@@ -14,6 +15,7 @@ const [securityFee,setSecurityFee]=useState(0)
 const [isLoading,setIsLoading]=useState(true)
 const [checkoutAmount,setCheckoutAmount]=useState(0)
 const [withDrawedAmount,setWithDrawedAmount]=useState(0)
+const [overLay,setOverlay]=useState(false)
 const loginState=useSelector(data=>data.userData)
 const router=useRouter()
 const db=getFirestore(app)
@@ -21,9 +23,32 @@ const db=getFirestore(app)
 const [isDialogOpen, setIsDialogOpen] = useState(false);
 const openDialog = () => setIsDialogOpen(true);
 const closeDialog = () => setIsDialogOpen(false);
+const getRequestCheckOuts=async()=>{
+  const docRef=doc(db,"checkoutRequests","RequestedCheckouts");
+  const RequestedDocs=await getDoc(docRef);
+  if(RequestedDocs.exists){
+    let AllData=RequestedDocs.data().Requests;
+    let userRequests=AllData.filter((Data)=>{
+      return Data.Email===loginState.Email
+    })
+    let reqCount=userRequests.reduce((acc,it)=>{
+      return acc+parseInt(it.Amount)
+    },0)
+    return reqCount;
+  }else{
+    return 0;
+  }
+}
 
 const handleCheckout = async() => {
-  await getFullfilledordersTotal();
+  setOverlay(true)
+  // await getFullfilledordersTotal();
+  let RequestedCheckoutsTotal=await getRequestCheckOuts();
+  if(RequestedCheckoutsTotal >= fulffiledOrdersTotal){
+    toast.error("You have requested all the amount you earned! Please recharge Your account")
+    setOverlay(false)
+    return
+  }
   const docRef=doc(db,"checkoutRequests","RequestedCheckouts");
   if(checkoutAmount <= 0 || checkoutAmount > fulffiledOrdersTotal){
     toast.error("Invalid amount or Amount is less than your fulfilled orders")
@@ -43,8 +68,10 @@ const handleCheckout = async() => {
   })
   closeDialog();
   toast.success("Your request is posted you will get a confirmation soon")
+  setOverlay(false)
 }catch(error){
   toast.error("Error making your checkout request.please try again later")
+  setOverlay(false)
   console.log(error)
   closeDialog();
 }
@@ -58,6 +85,7 @@ if(userData.exists()){
 }else{
     setSecurityFee(0)
 }
+
 }
 
 const getPendingOrdersTotal=async()=>{
@@ -85,6 +113,8 @@ setpendingOrdersTotal(TotalPendingProfit)
     setpendingOrdersTotal(0)
 }
 }
+
+
 
 
 const getPlacedOrdersTotal=async()=>{
@@ -139,6 +169,7 @@ const getFullfilledordersTotal=async()=>{
         let shipperTotal=data.reduce((acc,it)=>{
             return acc+parseInt(it.postingPrice)
         },0)
+        console.log(shipperTotal)
         let totalDelivery=deliveryCharges*(data.length)
         let totalProfit=0;
       if(shipperTotal > (total+totalDelivery+userOlderChekout)){
@@ -184,6 +215,7 @@ useEffect(()=>{
 
   return (
     <>
+    {overLay && <LoadingOverlay/>}
     {
         isLoading ? <BasicLoader/> : (
           <div className="relative bg-gray-50 py-16 pt-32">

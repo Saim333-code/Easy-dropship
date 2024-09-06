@@ -2,3 +2,31 @@
 @tailwind components;
 @tailwind utilities;
 
+.text-border {
+    text-shadow: 
+      1px 1px 0 #000,  
+      -1px -1px 0 #000,  
+      1px -1px 0 #000,  
+      -1px 1px 0 #000; 
+  }
+  /* styles.css */
+.custom-letter-spacing {
+  /* @apply tracking-wider; Adjust this as needed */
+  letter-spacing: 0.4em; /* Define your custom letter spacing */
+}
+
+  /* styles/globals.css or component-specific CSS */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-in-up {
+  animation: fadeInUp 1s ease-out;
+}

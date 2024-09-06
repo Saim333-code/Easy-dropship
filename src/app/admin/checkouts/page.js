@@ -16,6 +16,7 @@ const UserCheckouts = () => {
   const [isloading,setIsloading]=useState(false)
   const [checkouts,setCheckouts]=useState([])
   const [overlayLOading,setOverlayloading]=useState(false)
+  const [refresh,setRefresh]=useState(false)
   const db=getFirestore(app)
   const loginState=useSelector(data=>data.userData)
   const router=useRouter()
@@ -168,6 +169,10 @@ const UserCheckouts = () => {
     setIsDialogOpen(true);
   };
 
+  const handleRefresh=()=>{
+    setRefresh(true)
+    router.refresh()
+  }
   const handleDialogSubmit = async() => {
     setOverlayloading(true)
     const docRef=doc(db,"checkouts",`${selectedRecord.Email}`)
@@ -262,6 +267,31 @@ const UserCheckouts = () => {
   }
  }
 
+ useEffect(()=>{
+  if(!loginState.login || !loginState.isAdmin){
+    router.replace("/login")
+  }
+async function getData() {
+
+    setIsloading(true)
+    const docref=doc(db,"checkoutRequests","RequestedCheckouts")
+    let usersData=await getDoc(docref)
+    if(usersData.exists()){
+        setCheckouts(usersData.data().Requests) 
+        
+    }else{
+        setCheckouts([])
+       
+    }
+    setIsloading(false)
+    setRefresh(false)
+}
+getData()
+
+},[refresh])
+
+
+
 
 useEffect(()=>{
   if(!loginState.login || !loginState.isAdmin){
@@ -289,6 +319,13 @@ getData()
       {/* Search Bar and Button */}
       <div className="mb-6 flex justify-center">
         <div className="flex items-center space-x-2 w-full max-w-4xl">
+             {/* Refresh Button */}
+      <button
+        className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-700"
+        onClick={handleRefresh}
+      >
+        Refresh
+      </button>
           <input
             type="text"
             placeholder="Search by Email"

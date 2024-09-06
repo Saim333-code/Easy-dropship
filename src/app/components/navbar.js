@@ -57,7 +57,20 @@ export default function Navbar() {
   <nav className="sticky top-0 z-50 bg-emerald-500 p-4">
     <div className="container mx-auto flex flex-col lg:flex-row items-center justify-between">
       <Link className="text-lg font-bold text-white uppercase" href="/">
-        Easy Dropship
+      <h3
+      role="heading"
+      aria-level="3"
+      id="logo-text-3214"
+      data-ux="LogoHeading"
+      data-aid="HEADER_LOGO_TEXT_RENDERED"
+      headertreatment="Fill"
+      fontscalemultiplier="0.8"
+      data-typography="LogoAlpha"
+      data-font-scaled="true"
+      className="custom-letter-spacing"
+    >
+      Easy Dropship
+    </h3>
       </Link>
       <div className="flex items-center w-full lg:w-auto">
         <button

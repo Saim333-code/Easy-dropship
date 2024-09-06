@@ -25,13 +25,14 @@ const {
           >
             <div className="absolute top-2 right-2">
               <button
+                disabled={true}
                 onClick={ handleDelete}
                 className="p-2 rounded-full hover:bg-gray-100"
                 aria-label="Delete order"
               >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
-                  className="h-6 w-6 text-red-600"
+                  className="h-6 w-6 text-red-200"
                   viewBox="0 0 24 24"
                   fill="none"
                   stroke="currentColor"

@@ -39,8 +39,9 @@ const FeaturedItems = () => {
     {isLoading ? (
       <BasicLoader />
     ) : (
+      <>
       <div className="w-full py-12 px-8 bg-gray-100">
-        <h2 className="text-3xl font-bold mb-8 text-center">Featured Items</h2>
+        <h2 className="text-3xl font-bold mb-8 text-center font-mono border-b-2 text-shadow">New Arrivals</h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
           {featuredItems.map((item) => (
             <div
@@ -94,24 +95,39 @@ const FeaturedItems = () => {
                 >
                   Shop Now
                   <svg
-                    className="w-4 h-4 ml-2"
-                    xmlns="http://www.w3.org/2000/svg"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    aria-hidden="true"
-                  >
-                    <path d="M5 12l7-7 7 7" />
-                  </svg>
+                className="w-8 h-8 ml-2"
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                aria-hidden="true"
+                transform="rotate(90)"
+              >
+                <path d="M5 12l7-7 7 7" />
+              </svg>
+
                 </Link>
               </div>
             </div>
           ))}
         </div>
       </div>
+      <div className="relative w-full h-[700px] bg-cover bg-center mb-5 " style={{ backgroundImage: "url('/home.jpg')" }}>
+      <div className="absolute inset-0 bg-black bg-opacity-50 flex flex-col justify-center items-center">
+        <h1 className="text-white text-2xl md:text-3xl lg:text-4xl font-semibold text-center mb-4 transform transition-transform duration-500 hover:scale-105">
+          Work from the premises of your home
+        </h1>
+        <Link href="/signup" className="px-6 py-3 text-white bg-emerald-500 hover:bg-emerald-700 rounded-lg transition-colors duration-300 transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-emerald-500">
+        
+            Register With Us
+          
+        </Link>
+      </div>
+    </div>
+      </>
     )}
   </>
   );

@@ -12,9 +12,11 @@
 # next.js
 /.next/
 /out/
+/.vscode
 
 # production
 /build
+/src/app/components/test
 
 # misc
 .DS_Store

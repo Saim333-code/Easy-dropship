@@ -67,7 +67,7 @@ export default function Footer() {
             <Link href="https://instagram.com">
               <Image src="https://www.svgrepo.com/show/303145/instagram-2-1-logo.svg" width={30} height={30} alt="Instagram" />
             </Link>
-            <Link href="https://wa.me">
+            <Link href="https://wa.me/+923199974899">
               <Image src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6b/WhatsApp.svg/1024px-WhatsApp.svg.png" width={30} height={30} alt="WhatsApp" />
             </Link>
             {/* <Link href="mailto:example@example.com">

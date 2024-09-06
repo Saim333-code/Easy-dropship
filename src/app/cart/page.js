@@ -109,11 +109,21 @@ export default function Cart(){
     return(
         <>
    {isLoading ? <BasicLoader/> : 
-  <div className="h-screen bg-gray-100 pt-20 mb-5 overflow-y-hidden">
-    <h1 className="mb-10 text-center text-2xl font-bold">Cart Items</h1>
-    <div className="mx-auto max-w-5xl justify-center px-6 md:flex md:space-x-6 xl:px-0">
-      <div className="rounded-lg md:w-2/3">
-        <div className="max-h-[30rem] overflow-y-auto"> {/* Add max-height and scroll */}
+   <>
+   <section class="py-24 relative ">
+        <div class="w-full max-w-7xl p-5 md:px-5 lg-6 mx-auto border-2">
+
+            <h2 class="title font-manrope font-bold text-4xl leading-10 mb-8 text-center text-black">Shopping Cart
+            </h2>
+            <div class="hidden lg:grid grid-cols-2 py-6">
+                <div class="font-normal text-xl leading-8 text-gray-500">Product</div>
+                <p class="font-normal text-xl leading-8 text-gray-500 md:ml-[4rem] flex items-center justify-between">
+                    {/* <span class="w-full max-w-[200px] text-center">Delivery Charge</span> */}
+                    <span class="w-full max-w-[260px] text-center">Quantity</span>
+                    <span class="w-full max-w-[200px] text-center">Total</span>
+                </p>
+            </div>
+          {/* Add max-height and scroll */}
           {
             cartState.length !== 0 ?
               cartState.map((e) => {
@@ -132,29 +142,36 @@ export default function Cart(){
               }) :
               <NOdatacard text="Nothing in cart"/>
           }
+       <div class="bg-gray-50 rounded-xl p-6 w-full mb-8 max-lg:max-w-xl max-lg:mx-auto">
+                <div class="flex items-center justify-between w-full mb-6">
+                    <p class="font-normal text-xl leading-8 text-gray-400">Sub Total</p>
+                    <h6 class="font-semibold text-xl leading-8 text-gray-900">Rs {Subtotal > 0 ? Subtotal : "00"}/-</h6>
+                </div>
+                <div class="flex items-center justify-between w-full pb-6 border-b border-gray-200">
+                    <p class="font-normal text-xl leading-8 text-gray-400">Delivery Charge</p>
+                    <h6 class="font-semibold text-xl leading-8 text-gray-900">Rs {delivery}/-</h6>
+                </div>
+                <div class="flex items-center justify-between w-full py-6">
+                    <p class="font-manrope font-medium text-2xl leading-9 text-gray-900">Total</p>
+                    <h6 class="font-manrope font-medium text-2xl leading-9 text-emerald-500">Rs {cartTotal > 0 ? cartTotal : "00"}/-</h6>
+                </div>
+            </div>
+            <div class="flex items-center flex-col sm:flex-row justify-center gap-3 mt-8">
+               
+                <button
+                    class="rounded-full w-full max-w-[280px] py-4 text-center justify-center items-center bg-emerald-600 font-semibold text-lg text-white flex transition-all duration-500 hover:bg-emerald-700"
+                    onClick={Checkout}
+                    >Checkout
+                    <svg class="ml-2" xmlns="http://www.w3.org/2000/svg" width="23" height="22" viewBox="0 0 23 22"
+                        fill="none">
+                        <path d="M8.75324 5.49609L14.2535 10.9963L8.75 16.4998" stroke="white" stroke-width="1.6"
+                            strokeLinecap="round" strokeLinejoin="round" />
+                    </svg>
+                </button>
+            </div>
         </div>
-      </div>
-      <div className="mt-6 h-full rounded-lg border bg-white p-6 shadow-md md:mt-0 md:w-1/3">
-        <div className="mb-2 flex justify-between">
-          <p className="text-gray-700">Subtotal</p>
-          <p className="text-gray-700">RS {Subtotal > 0 ? Subtotal : "00"}/-</p>
-        </div>
-        <div className="flex justify-between">
-          <p className="text-gray-700">Delivery</p>
-          <p className="text-gray-700">Rs {delivery}/-</p>
-        </div>
-        <hr className="my-4" />
-        <div className="flex justify-between">
-          <p className="text-lg font-bold">Total</p>
-          <div className="">
-            <p className="mb-1 text-lg font-bold">RS {cartTotal > 0 ? cartTotal : "00"}/-</p>
-            <p className="text-sm text-gray-700">including VAT</p>
-          </div>
-        </div>
-        <button className="mt-6 w-full rounded-md bg-emerald-500 py-1.5 font-medium text-white hover:bg-emerald-600" onClick={Checkout}>Check out</button>
-      </div>
-    </div>
-  </div>
+    </section>
+  </>
 }
 
         </>

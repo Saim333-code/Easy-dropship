@@ -24,7 +24,8 @@
     "react-dom": "^18",
     "react-infinite-scroll-component": "^6.1.0",
     "react-redux": "^9.1.2",
-    "react-toastify": "^10.0.5"
+    "react-toastify": "^10.0.5",
+    "tw-elements-react": "^1.0.0-alpha-end"
   },
   "devDependencies": {
     "eslint": "^8",

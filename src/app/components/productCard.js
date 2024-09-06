@@ -151,39 +151,39 @@ const shopNow=()=>{
                   alt="Product"
                   className="md:w-[88%] max-h-[52%] md:ml-[5rem] h-auto rounded-lg shadow-md mb-4"
                   id="mainImage"
-                  height={500}
-                  width={500}
+                  height={600}
+                  width={600}
                 />  
                 <div className="flex gap-4 py-4 justify-center overflow-x-auto md:ml-[5rem]">
                   <Image
                     src={src1}
                     alt="Thumbnail 1"
-                    height={500}
-                  width={500}
+                    height={600}
+                  width={600}
                     className="size-16 sm:size-20 object-cover rounded-md cursor-pointer opacity-60 hover:opacity-100 transition duration-300"
                     onClick={() => changeImage(src1)}
                   />
                   <Image
                     src={src2}
                     alt="Thumbnail 2"
-                    height={500}
-                  width={500}
+                    height={600}
+                  width={600}
                     className="size-16 sm:size-20 object-cover rounded-md cursor-pointer opacity-60 hover:opacity-100 transition duration-300"
                     onClick={() => changeImage(src2)}
                   />
                   <Image
                     src={src3}
                     alt="Thumbnail 3"
-                    height={500}
-                  width={500}
+                    height={600}
+                  width={600}
                     className="size-16 sm:size-20 object-cover rounded-md cursor-pointer opacity-60 hover:opacity-100 transition duration-300"
                     onClick={() => changeImage(src3)}
                   />
                   <Image
                     src={src4}
                     alt="Thumbnail 4"
-                    height={500}
-                  width={500}
+                    height={600}
+                  width={600}
                     className="size-16 sm:size-20 object-cover rounded-md cursor-pointer opacity-60 hover:opacity-100 transition duration-300"
                     onClick={() => changeImage(src4)}
                   />
