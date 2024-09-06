@@ -76,7 +76,7 @@ export default function Footer() {
             </Link> */}
           </div>
         </div>
-        <p className="font-sans p-8 text-start md:text-center md:text-lg md:p-4">© 2024 All rights reserved to Easy Dropshipping.</p>
+        <p className="font-sans p-8 text-start md:text-center md:text-lg md:p-4">© 2024 All rights reserved to Easy Dropshipping.Developed By <span className='text-emerald-500'>SINTECHS.LTD</span></p>
       </div>
     </footer>
     
