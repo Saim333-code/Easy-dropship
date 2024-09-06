@@ -119,7 +119,8 @@ const handleQuantityChange=(e)=>{
 
 const shopNow=()=>{
     if(login.login === false){
-        router.replace("/login")
+        window.location.replace("/login")
+        // router.replace("/login")
     }
     if(parseInt(quantity) === 0){
         toast.error("Please inerease quantity")
