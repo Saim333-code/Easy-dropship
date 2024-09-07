@@ -30,3 +30,11 @@
 .animate-fade-in-up {
   animation: fadeInUp 1s ease-out;
 }
+@font-face {
+  font-family: 'Norwester';
+  src: url('/public/norwester.woff') format('woff');
+  font-weight: lighter;
+  font-style: oblique;
+}
+
+

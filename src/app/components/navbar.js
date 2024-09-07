@@ -67,7 +67,7 @@ export default function Navbar() {
       fontscalemultiplier="0.8"
       data-typography="LogoAlpha"
       data-font-scaled="true"
-      className="custom-letter-spacing"
+      className="custom-letter-spacing font-norwester"
     >
       Easy Dropship
     </h3>
