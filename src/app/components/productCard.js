@@ -110,10 +110,10 @@ const addTocart=()=>{
 
 const handleQuantityChange=(e)=>{
     console.log(e.target.value)
-    if(e.target.value){
+    if(e.target.value && parseInt(e.target.value) > 0){
     setQuantity(parseInt(e.target.value))
     }else{
-        setQuantity(0) 
+        setQuantity(1) 
     }
 }
 

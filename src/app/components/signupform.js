@@ -5,6 +5,7 @@ import { toast } from 'react-toastify';
 import axios from "axios";
 import LoadingOverlay from "./bottomLoader";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
 export default  function Signup(){
   let [userData,setUserData]=useState({});
   let [error,setError]=useState(" ");
@@ -73,7 +74,9 @@ const SubmitForm=async (e)=>{
     {isLoading && <LoadingOverlay/>}
     <div className="border border-black">
 <div className="p-10 ">
+  <Link href={"/"}>
 <h1 className="text-4xl font-extrabold text-center mb-8 text-emerald-500 underline">Easy Dropship</h1>
+  </Link>
 <h2 className="mb-8 font-extrabold text-3xl text-emerald-500">Register</h2>
   <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
 

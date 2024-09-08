@@ -102,7 +102,9 @@ const router=useRouter();
   {/* Right: Login Form */}
   <div className="w-full max-w-xs my-auto mx-auto lg:w-1/2 p-4">
     <div className="text-center mb-6">
+      <Link href={"/"}>
       <h1 className="text-2xl font-bold text-emerald-500 underline">Easy Dropship</h1>
+      </Link>
     </div>
     <form className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4" onSubmit={submitForm}>
       <h2 className="text-xl font-bold text-emerald-500 mb-4 text-center">Login</h2>
