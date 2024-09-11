@@ -8,7 +8,7 @@ import "tw-elements-react/dist/css/tw-elements-react.min.css";
 const roboto = Roboto({ weight: "400", subsets: ["latin"] });
 
 export const metadata = {
-  title: "Easydrop Ship",
+  title: "Easy Dropship",
   description: "Simplify Your E-Commerce Journey",
 };
 
