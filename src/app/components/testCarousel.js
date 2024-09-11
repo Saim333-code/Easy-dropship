@@ -9,7 +9,7 @@ export default function CarouselDarkVariant() {
         showControls
         showIndicators
         crossfade
-        ride={false}
+        ride={"carousel"}
         
         prevBtnIcon={
           <>
@@ -124,7 +124,7 @@ export default function CarouselDarkVariant() {
               width={5040}
             />
             <div className="absolute inset-0 bg-black opacity-50"></div>
-            <div className="absolute inset-x-[15%] bottom-5 md:bottom-[45.5rem]    py-5 text-center text-white font-serif font-extrabold md:block md:text-3xl">
+            <div className="absolute inset-x-[15%] bottom-5 md:bottom-[45.5rem]  lg:bottom-[24rem]  xl:bottom-[35rem] 2xl:bottom-[46rem] py-5 text-center text-white font-serif font-extrabold md:block md:text-3xl">
               <h5 className="text-xl font-serif tracking-widest font-medium">Triple H:</h5>
               <p className="tracking-widest font-serif font-medium">
              Hum Hazir Hain.
