@@ -63,21 +63,37 @@ export default function CarouselDarkVariant() {
         }}
          className="h-5/6" >
         <div className="relative w-full md:h-[29.75rem] overflow-hidden after:clear-both after:block after:content-['']">
-          <TECarouselItem
+        <TECarouselItem
             itemID={1}
             className="relative float-left -mr-[100%] hidden w-full !transform-none opacity-0 transition-opacity duration-[600ms] ease-in-out motion-reduce:transition-none"
           >
+             <div className="hidden md:block relative w-full h-[500px] overflow-hidden">
+                        <Image
+                            src="/car2.jpg"
+                            className="absolute -bottom-[12.25rem] left-0 w-full h-auto object-fill"
+                            alt="..."
+                            height={3456}
+                            width={6144}
+                        />
+                        </div>
+
             <Image
               src="/car2.jpg"
-              className="block w-full"
+              className="block w-full md:hidden"
               alt="..."
               height={3456}
               width={6144}
+             
             />
             <div className="absolute inset-0 bg-black opacity-50"></div>
-            <div className="absolute inset-x-[15%] inset-y-[23%]  md:text-3xl  md:bottom-[14.25rem] text-white py-5 text-center font-serif font-extrabold  md:block">
-            <p className="tracking-widest font-serif font-medium">Welcome to Easy Dropship</p>
+            <div className="absolute inset-x-[15%] bottom-5  md:text-3xl  md:bottom-[14.25rem] text-white py-5 text-center font-serif font-extrabold  md:block">
+              {/* <h5 className="text-xl">EASYDROP SHIP</h5> */}
+              <p className="tracking-widest font-serif font-medium">
               
+              Welcome to Easy Dropship
+             
+              
+              </p>
             </div>
           </TECarouselItem>
           <TECarouselItem
@@ -117,17 +133,34 @@ export default function CarouselDarkVariant() {
             itemID={3}
             className="relative float-left -mr-[100%] hidden w-full !transform-none opacity-0 transition-opacity duration-[600ms] ease-in-out motion-reduce:transition-none"
           >
+             <div className="hidden md:block relative w-full h-[500px] overflow-hidden">
+                        <Image
+                            src="/car6.jpg"
+                            className="absolute -bottom-[12.25rem] left-0 w-full h-auto object-fill"
+                            alt="..."
+                            height={3360}
+                            width={5040}
+              
+                        />
+                        </div>
+
             <Image
               src="/car6.jpg"
-              className="block w-full"
+              className="block w-full md:hidden"
               alt="..."
               height={3360}
               width={5040}
+
+             
             />
             <div className="absolute inset-0 bg-black opacity-50"></div>
-            <div className="absolute inset-x-[15%] inset-y-[18%] md:bottom-[45.5rem]  lg:bottom-[24rem]  xl:bottom-[36rem] 2xl:bottom-[54rem] py-5 text-center text-white font-serif font-extrabold md:block md:text-3xl">
+            <div className="absolute inset-x-[15%] bottom-5  md:text-3xl  md:bottom-[14.25rem] text-white py-5 text-center font-serif font-extrabold  md:block">
+              {/* <h5 className="text-xl">EASYDROP SHIP</h5> */}
               <p className="tracking-widest font-serif font-medium">
+              
               Only Solution To Every Ecommerce Problem
+             
+              
               </p>
             </div>
           </TECarouselItem>
