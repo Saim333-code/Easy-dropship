@@ -9,7 +9,7 @@ export default function CarouselDarkVariant() {
         showControls
         showIndicators
         crossfade
-        ride={false}
+        ride={"carousel"}
         
         prevBtnIcon={
           <>
