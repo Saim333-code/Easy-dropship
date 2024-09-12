@@ -9,7 +9,7 @@ export default function CarouselDarkVariant() {
         showControls
         showIndicators
         crossfade
-        ride={"carousel"}
+        ride={false}
         
         prevBtnIcon={
           <>
@@ -75,18 +75,16 @@ export default function CarouselDarkVariant() {
               width={6144}
             />
             <div className="absolute inset-0 bg-black opacity-50"></div>
-            <div className="absolute inset-x-[15%] bottom-5 md:bottom-[34.5rem] lg:bottom-[18rem] xl:bottom-[27rem] 2xl:bottom-[36rem] font-serif py-5 text-center text-white font-extrabold md:block md:text-3xl">
-              <h5 className="text-xl tracking-widest font-thin">Welcome to Easy Dropship</h5>
-              <p className="tracking-widest font-serif font-medium">
-              Simplify Your Ecommerce Journey.
-              </p>
+            <div className="absolute inset-x-[15%] bottom-5 md:bottom-[34.5rem] lg:bottom-[18rem] xl:bottom-[27rem] 2xl:bottom-[36rem] py-5 text-center text-white font-serif font-extrabold md:block md:text-3xl">
+            <p className="tracking-widest font-serif font-medium">Welcome to Easy Dropship</p>
+              
             </div>
           </TECarouselItem>
           <TECarouselItem
             itemID={2}
             className="relative float-left -mr-[100%] hidden w-full !transform-none opacity-0 transition-opacity duration-[600ms] ease-in-out motion-reduce:transition-none"
           >
-             <div class="hidden md:block relative w-full h-[500px] overflow-hidden">
+             <div className="hidden md:block relative w-full h-[500px] overflow-hidden">
                         <Image
                             src="/car3.jpg"
                             className="absolute -bottom-[12.25rem] left-0 w-full h-auto object-fill"
@@ -108,7 +106,10 @@ export default function CarouselDarkVariant() {
             <div className="absolute inset-x-[15%] bottom-5  md:text-3xl  md:bottom-[14.25rem] text-white py-5 text-center font-serif font-extrabold  md:block">
               {/* <h5 className="text-xl">EASYDROP SHIP</h5> */}
               <p className="tracking-widest font-serif font-medium">
-              Only Solution To Every Ecommerce Problem
+              
+              Simplify Your Ecommerce Journey.
+             
+              
               </p>
             </div>
           </TECarouselItem>
@@ -124,10 +125,9 @@ export default function CarouselDarkVariant() {
               width={5040}
             />
             <div className="absolute inset-0 bg-black opacity-50"></div>
-            <div className="absolute inset-x-[15%] bottom-5 md:bottom-[45.5rem]  lg:bottom-[24rem]  xl:bottom-[35rem] 2xl:bottom-[46rem] py-5 text-center text-white font-serif font-extrabold md:block md:text-3xl">
-              <h5 className="text-xl font-serif tracking-widest font-medium">Triple H:</h5>
-              <p className="tracking-widest font-serif font-medium ">
-             Hum Hazir Hain.
+            <div className="absolute inset-x-[15%] bottom-5 md:bottom-[45.5rem]  lg:bottom-[24rem]  xl:bottom-[36rem] 2xl:bottom-[46rem] py-5 text-center text-white font-serif font-extrabold md:block md:text-3xl">
+              <p className="tracking-widest font-serif font-medium">
+              Only Solution To Every Ecommerce Problem
               </p>
             </div>
           </TECarouselItem>
