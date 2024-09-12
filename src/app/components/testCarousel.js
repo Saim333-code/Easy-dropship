@@ -75,7 +75,7 @@ export default function CarouselDarkVariant() {
               width={6144}
             />
             <div className="absolute inset-0 bg-black opacity-50"></div>
-            <div className="absolute inset-x-[15%] bottom-5 md:bottom-[34.5rem] lg:bottom-[18rem] xl:bottom-[27rem] 2xl:bottom-[36rem] py-5 text-center text-white font-serif font-extrabold md:block md:text-3xl">
+            <div className="absolute inset-x-[15%] bottom-5 md:bottom-[34.5rem] lg:bottom-[18rem] xl:bottom-[27rem] 2xl:bottom-[42rem] py-5 text-center text-white font-serif font-extrabold md:block md:text-3xl">
             <p className="tracking-widest font-serif font-medium">Welcome to Easy Dropship</p>
               
             </div>
@@ -125,7 +125,7 @@ export default function CarouselDarkVariant() {
               width={5040}
             />
             <div className="absolute inset-0 bg-black opacity-50"></div>
-            <div className="absolute inset-x-[15%] bottom-5 md:bottom-[45.5rem]  lg:bottom-[24rem]  xl:bottom-[36rem] 2xl:bottom-[46rem] py-5 text-center text-white font-serif font-extrabold md:block md:text-3xl">
+            <div className="absolute inset-x-[15%] bottom-5 md:bottom-[45.5rem]  lg:bottom-[24rem]  xl:bottom-[36rem] 2xl:bottom-[54rem] py-5 text-center text-white font-serif font-extrabold md:block md:text-3xl">
               <p className="tracking-widest font-serif font-medium">
               Only Solution To Every Ecommerce Problem
               </p>
