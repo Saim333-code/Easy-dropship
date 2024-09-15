@@ -41,8 +41,10 @@ const UserTableWithPopup = (props) => {
     let userData=await getDoc(docRef)
     if(userData.exists()){
         setSelectedUser(userData.data())
+       await handlegetData()
      }else{
         setSelectedUser(null)
+        await handlegetData()
      }
     props.setOverLayloading(false)
     router.refresh();
@@ -53,6 +55,7 @@ const UserTableWithPopup = (props) => {
 }
   };
   const handlegetData=async()=>{
+    setIsLoading(true)
     const docRef=collection(db,"verifiedUsers")
     let usersData=await getDocs(docRef)
     const userList=usersData.docs.map(doc => ({
@@ -66,10 +69,12 @@ const UserTableWithPopup = (props) => {
   }
 
   useEffect(()=>{
-    setIsLoading(true)
     handlegetData()
   },[])
-
+  useEffect(()=>{
+    handlegetData()
+   
+  },[props.updated])
   return (
     <>
     {

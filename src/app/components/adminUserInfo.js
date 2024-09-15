@@ -17,6 +17,7 @@ const UserSearchInfo = () => {
   const [isLoading,setIsLoading]=useState(false)
   const [securityFees,setSecurityFees]=useState(0)
   const [overlayLoading,setOverLayloading]=useState(false)
+  const [updated,setupdated]=useState(false)
   const [count,setCount]=useState(0)
   const db=getFirestore(app)
   const router=useRouter();
@@ -60,8 +61,10 @@ const UserSearchInfo = () => {
     let userData=await getDoc(docRef)
     if(userData.exists()){
         setUser(userData.data())
+        setupdated(prev=>!prev)
      }else{
          setUser(null)
+         setupdated(prev=>!prev)
      }
     setOverLayloading(false)
     router.refresh();
@@ -71,6 +74,7 @@ const UserSearchInfo = () => {
     setOverLayloading(false)
 }
   };
+
 
 useEffect(()=>{
 if(!loginState.login || !loginState.isAdmin){
@@ -167,6 +171,7 @@ router.replace("/login")
         setSecurityFees={setSecurityFees}
         overlayLoading={overlayLoading}
         setOverLayloading={setOverLayloading}
+        updated={updated}
         />
     </div>
     
