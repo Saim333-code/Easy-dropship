@@ -67,7 +67,7 @@ export  async function POST(req){
           await addUserData(userDetails)
         //   console.log(fbresult.data)
         return NextResponse.json({
-            Result:`Your information is submited for verification please remember this id: ${signupID}`,
+            Result:`Your Registration Request has been sent for approval, it'd take 12-24 hrs before approval.`,
             Success:"Got it"
         
         },{
