@@ -16,7 +16,7 @@
 
 # production
 /build
-/src/app/components/test
+\src\app\test\
 
 # misc
 .DS_Store

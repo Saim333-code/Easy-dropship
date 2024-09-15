@@ -8,6 +8,7 @@ import LoadingOverlay from './bottomLoader';
 import { toast } from 'react-toastify';
 import { useRouter } from 'next/navigation';
 import { useSelector } from 'react-redux';
+import UserTableWithPopup from './verifiedUsers';
 
 const UserSearchInfo = () => {
   const [user, setUser] = useState(null);
@@ -16,10 +17,13 @@ const UserSearchInfo = () => {
   const [isLoading,setIsLoading]=useState(false)
   const [securityFees,setSecurityFees]=useState(0)
   const [overlayLoading,setOverLayloading]=useState(false)
+  const [count,setCount]=useState(0)
   const db=getFirestore(app)
   const router=useRouter();
   const loginState=useSelector(data=>data.userData)
-
+  const updateCount=(newCount)=>{
+    setCount(newCount)
+  }
   const handleSearch = async() => {
   
     setIsLoading(true)
@@ -82,7 +86,10 @@ router.replace("/login")
     }
     
     <div className="min-h-screen bg-gray-100 p-6">
-      <div className="flex justify-center mb-6">
+      <div className="flex justify-center mb-6 relative">
+      <div className="absolute top-3 left-4 bg-gray-100 text-gray-700 px-4 py-2 rounded-md shadow-md">
+            Total users count: {count}
+          </div>
         <input
           type="email"
           placeholder="Enter User's Email"
@@ -107,8 +114,13 @@ router.replace("/login")
         }
       </div>
 
+
       {isLoading ? <BasicLoader/> :(user ? (
-        <div className="max-w-4xl mx-auto p-6 bg-white shadow-md rounded-md">
+          <div className=" max-w-4xl mx-auto p-6 bg-white shadow-md rounded-md">
+          {/* Total user count label */}
+          
+    
+          {/* User details */}
           <h2 className="text-2xl font-bold mb-4 text-emerald-600">{user.Name}</h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <p><strong>Cnic: </strong>{user.Cnic}</p>
@@ -121,19 +133,18 @@ router.replace("/login")
             <p><strong>Bank Account no: </strong> {user.BankAccountNumber}</p>
             <p><strong>Name on card:</strong>{user.Cardname}</p>
             <p><strong>Brand Name:</strong> {user.Brandname}</p>
-            
           </div>
-
+    
           <div className="mt-6 flex">
             <input
               type="number"
               placeholder="Update Security Fees"
               className="p-2 w-full border rounded-md"
-              onChange={(e)=>{
-                if(e.target.value && e.target.value > 0){
-                    setSecurityFees(parseInt(e.target.value))
-                }else{
-                    setSecurityFees(0)
+              onChange={(e) => {
+                if (e.target.value && e.target.value > 0) {
+                  setSecurityFees(parseInt(e.target.value));
+                } else {
+                  setSecurityFees(0);
                 }
               }}
             />
@@ -146,8 +157,17 @@ router.replace("/login")
           </div>
         </div>
       ):
-      <NOdatacard text="No data to display"/>
+      // <NOdatacard text="No data to display"/>
+      <></>
       )}
+      <UserTableWithPopup
+       updateCount={updateCount}
+        placeholder={"update security fees"} 
+        handleSubmit={handleSubmit} 
+        setSecurityFees={setSecurityFees}
+        overlayLoading={overlayLoading}
+        setOverLayloading={setOverLayloading}
+        />
     </div>
     
    
