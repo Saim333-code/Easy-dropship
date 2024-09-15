@@ -51,7 +51,7 @@ const UserTableWithPopup = (props) => {
     toast.success("updated Security Fees")
 
 }else{
-    setOverLayloading(false)
+    props.setOverLayloading(false)
 }
   };
   const handlegetData=async()=>{

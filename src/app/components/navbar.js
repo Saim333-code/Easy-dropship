@@ -27,7 +27,7 @@ export default function Navbar() {
    
   })
   useEffect(()=>{
-    console.log(pathname)
+    // console.log(pathname)
     const unsubscribe=onAuthStateChanged(auth,(userInfo)=>{
       if(userInfo && !loginState.login){
         const X_y_z = localStorage.getItem("ADS");
@@ -48,9 +48,7 @@ export default function Navbar() {
   },[]);
 
 
-  useEffect(()=>{
-    console.log(loginState)
-  })
+
   return (
     <>
 {pathname !== "/login" && (

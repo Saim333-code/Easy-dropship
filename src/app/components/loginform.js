@@ -58,7 +58,7 @@ const router=useRouter();
       }
       try{
       const userCredential = await signInWithEmailAndPassword(auth, userData.Email, userData.Password);
-      console.log("user: ", userCredential.user.email)
+      // console.log("user: ", userCredential.user.email)
       const docSnap = await getDoc(docRef);
       const mails=docSnap.data().gmail;
       let isAdmin=mails.includes(userCredential.user.email)
@@ -71,7 +71,7 @@ const router=useRouter();
        dispatch(addUser(JSON.stringify(usersStateData)))
        let encData=CryptoJS.AES.encrypt(JSON.stringify(JSON.stringify(usersStateData)),secretKey).toString();
        localStorage.setItem("ADS",encData)
-       console.log("data Written")
+      //  console.log("data Written")
       setIsloading(false)
       
        console.log(usersStateData)
