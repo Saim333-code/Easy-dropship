@@ -14,7 +14,8 @@ const {
 
 
   const handleDelete = async () => {
-  await props.delOrder(ID)
+    return
+  // await props.delOrder(ID)
   };
 
   return (

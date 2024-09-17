@@ -25,14 +25,66 @@ const UserSearchInfo = () => {
   const updateCount=(newCount)=>{
     setCount(newCount)
   }
+
+  let handleGetDelivery=async()=>{
+    const docRef=doc(db,"Delivery","info")
+    const getCharges=await getDoc(docRef)
+    if(getCharges.exists()){
+      return parseInt(getCharges.data().Charges)
+    }else{
+      toast.error("unable to get delivery charges! due to which can't calculte user profits....")
+      return 0;
+    }
+  }
+
+
+
+
+
   const handleSearch = async() => {
   
     setIsLoading(true)
     setClear(true)
     const docRef=doc(db,"verifiedUsers",`${searchTerm}`)
-    const userData=await getDoc(docRef)
+    const userSearchData=await getDoc(docRef)
+    if(userSearchData.exists()){
+      let user=userSearchData.data();
+    const docRef=doc(db,"userFulfilledOrders",`${searchTerm}`)
+    const userData=await getDoc(docRef);
     if(userData.exists()){
-       setUser(userData.data())
+      let orders=userData.data().FulfilledOrders;
+
+      let ordersTotal=orders.reduce((acc,it)=>{
+        return acc+parseInt(it.Total)
+      },0)
+      let shipperTotal=orders.reduce((acc,it)=>{
+        return acc+parseInt(it.postingPrice)
+      },0)
+
+      let Delivery=await handleGetDelivery();
+
+
+      let userProfit=(shipperTotal-Delivery)-ordersTotal;
+      user["Total_profit"]=userProfit;
+
+      let withdrawRef=doc(db,"checkouts",`${user.Email}`)
+      let withDrawData=await getDoc(withdrawRef)
+          let totalWithDraw=0;
+        if(withDrawData.exists()){
+          totalWithDraw=parseInt(withDrawData.data().TotalAmount)
+          user["Withdrawed_amount"]=totalWithDraw;
+          user["Pending_payment"]=userProfit-totalWithDraw
+        }else{
+          totalWithDraw=0;
+          user["Withdrawed_amount"]=0;
+          user["Pending_payment"]=userProfit;
+        }
+    }else{
+      user["Total_profit"]=0;
+      user["Withdrawed_amount"]=0;
+      user["Pending_payment"]=0;
+    }
+       setUser(user)
     }else{
         setUser(null)
     }
@@ -137,6 +189,9 @@ router.replace("/login")
             <p><strong>Bank Account no: </strong> {user.BankAccountNumber}</p>
             <p><strong>Name on card:</strong>{user.Cardname}</p>
             <p><strong>Brand Name:</strong> {user.Brandname}</p>
+              <p><strong>Total Profit Earned:</strong>Rs {user.Total_profit}/-</p>
+              <p><strong>Total Amount Withdrawed:</strong>Rs {user.Withdrawed_amount}/-</p>
+              <p><strong>Total Amount Pending:</strong>Rs {user.Pending_payment}/-</p>
           </div>
     
           <div className="mt-6 flex">

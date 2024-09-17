@@ -116,22 +116,7 @@ export async function POST(req) {
                 },{
                     status:201
                 });
-    //    let mailResponse=await SendEmail(Email,Password,Name)
-    //    if(mailResponse === "Your account has been verified"){
-        // return NextResponse.json({
-    //         User:user,
-    //         Result:"Success"
-    //     },{
-    //         status:201
-    //     });
-    //    }else{
-    //     return NextResponse.json({
-    //         User:user,
-    //         Result:"Success! But unable to send Email"
-    //     },{
-    //         status:201
-    //     });
-    //    }
+   
       
         
     }catch(err){

@@ -1,7 +1,6 @@
 "use client"
 import {useState} from "react";
 import { toast } from "react-toastify";
-import axios from "axios";
 import { getAuth,signInWithEmailAndPassword } from "firebase/auth";
 import { getFirestore,getDoc,doc } from "firebase/firestore";
 import { app } from "@/app/_private/firebaseConfig";

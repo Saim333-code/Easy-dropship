@@ -15,10 +15,61 @@ const UserTableWithPopup = (props) => {
   const [selectedUser, setSelectedUser] = useState(null);
   const [securityFees, setSecurityFees] = useState(0);
   const [isLoading,setIsLoading]=useState(false)
+  const [overlayLoading,setOverLayloading]=useState(false)
+
+  let handleGetDelivery=async()=>{
+    const docRef=doc(db,"Delivery","info")
+    const getCharges=await getDoc(docRef)
+    if(getCharges.exists()){
+      return parseInt(getCharges.data().Charges)
+    }else{
+      toast.error("unable to get delivery charges! due to which can't calculte user profits....")
+      return 0;
+    }
+  }
+
 
   // Function to handle row click and open the popup
-  const handleRowClick = (user) => {
+  const handleRowClick = async(user) => {
+    setOverLayloading(true)
+    const docRef=doc(db,"userFulfilledOrders",`${user.Email}`)
+    const userData=await getDoc(docRef);
+    if(userData.exists()){
+      let orders=userData.data().FulfilledOrders;
+
+      let ordersTotal=orders.reduce((acc,it)=>{
+        return acc+parseInt(it.Total)
+      },0)
+      let shipperTotal=orders.reduce((acc,it)=>{
+        return acc+parseInt(it.postingPrice)
+      },0)
+
+      let Delivery=await handleGetDelivery();
+
+
+      let userProfit=(shipperTotal-Delivery)-ordersTotal;
+      user["Total_profit"]=userProfit;
+
+      let withdrawRef=doc(db,"checkouts",`${user.Email}`)
+      let withDrawData=await getDoc(withdrawRef)
+          let totalWithDraw=0;
+        if(withDrawData.exists()){
+          totalWithDraw=parseInt(withDrawData.data().TotalAmount)
+          user["Withdrawed_amount"]=totalWithDraw;
+          user["Pending_payment"]=userProfit-totalWithDraw
+        }else{
+          totalWithDraw=0;
+          user["Withdrawed_amount"]=0;
+          user["Pending_payment"]=userProfit;
+        }
+    }else{
+      user["Total_profit"]=0;
+      user["Withdrawed_amount"]=0;
+      user["Pending_payment"]=0;
+    }
+    setOverLayloading(false)
     setSelectedUser(user);
+    
   };
 
   // Function to close the popup
@@ -77,8 +128,11 @@ const UserTableWithPopup = (props) => {
   },[props.updated])
   return (
     <>
+     {overlayLoading && <LoadingOverlay/>} 
     {
         isLoading ? <BasicLoader/> : 
+       
+       
     <div className="p-4">
       {/* Table for displaying user information */}
       <table className="min-w-full divide-y divide-gray-200 bg-white rounded-lg shadow-md relative">
@@ -110,9 +164,11 @@ const UserTableWithPopup = (props) => {
 
       {/* Popup for displaying detailed user information */}
       {selectedUser && (
+        
+
         <>
-        {
-        props.overlayLoading ? <LoadingOverlay/>:
+    
+          
         <div className="fixed inset-0 bg-gray-800 bg-opacity-50 flex items-center justify-center z-50">
           <div className="relative max-w-4xl w-full mx-auto p-6 bg-white shadow-md rounded-md">
             {/* Close button (cross icon) */}
@@ -148,6 +204,10 @@ const UserTableWithPopup = (props) => {
               <p><strong>Bank Account no: </strong> {selectedUser.BankAccountNumber}</p>
               <p><strong>Name on card:</strong>{selectedUser.Cardname}</p>
               <p><strong>Brand Name:</strong> {selectedUser.Brandname}</p>
+              <p><strong>Total Profit Earned:</strong>Rs {selectedUser.Total_profit}/-</p>
+              <p><strong>Total Amount Withdrawed:</strong>Rs {selectedUser.Withdrawed_amount}/-</p>
+              <p><strong>Total Amount Pending:</strong>Rs {selectedUser.Pending_payment}/-</p>
+
             </div>
 
             <div className="mt-6 flex">
@@ -172,9 +232,7 @@ const UserTableWithPopup = (props) => {
             </div>
           </div>
         </div>
-        }
-        </>
-      )}
+        </>      )}
     </div>
     }
     </>

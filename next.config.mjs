@@ -23,7 +23,7 @@ const nextConfig = {
                 
             },
             {
-                hostname:"i.ibb.co"
+                hostname:"https://freepik.com"
                 
             },
             {
