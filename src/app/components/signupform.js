@@ -281,7 +281,7 @@ const SubmitForm=async (e)=>{
   >
     <h2 className="font-bold text-xl mb-4">Instructions</h2>
     <ul className="list-disc mt-4 list-inside text-sm font-semibold">
-      <li>Your Registration Request will be sent for approval, it'd take 12-24 hrs before approval.</li>
+      <li>Your Registration Request will be sent for approval, it&apos;d take 12-24 hrs before approval.</li>
       {/* <li>Users must not use offensive, vulgar, or otherwise inappropriate language in their username or profile information.</li>
       <li>Users must not create multiple accounts for the same person.</li> */}
     </ul>
