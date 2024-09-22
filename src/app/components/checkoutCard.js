@@ -9,7 +9,8 @@ import { getFirestore,collection,addDoc,doc,setDoc,getDoc,getDocs,updateDoc, arr
 import axios from "axios"
 import BasicLoader from "./basicLoader"
 import LoadingOverlay from "./bottomLoader"
-import NOdatacard from "./noDatacard"
+import ErrorPopup from "./errorpopup"
+import Successpopover from "./successpop"
 export default function CheckOutCARD(props){
     const router=useRouter();
     const {stateToRead}=props;
@@ -21,6 +22,9 @@ export default function CheckOutCARD(props){
     const [DeliveryPrice,setDeliveryPrice]=useState(0)
     const [isLoading,setIsloading]=useState(false)
     const [overLayLoading,setOverLAyloading]=useState(false)
+    const [showError,setShowError]=useState(false)
+    const [showSuccess,setShowsuccess]=useState(false)
+    const [errorText,setErrortext]=useState('')
     const hasUnsavedChanges = true;
     
     useEffect(()=>{
@@ -61,7 +65,13 @@ export default function CheckOutCARD(props){
     };
   }, [hasUnsavedChanges]); // Dependency array includes `hasUnsavedChanges`
 
-
+  const handleCloseError=()=>{
+    setOverLAyloading(false)
+    setShowError(false)
+  }
+  const handleShopMore=()=>{
+    setShowsuccess(false)
+  }
     const SendMAil=async()=>{
       let mailRequest=await axios.post("/apis/sendMail",{
         EmailAddress:`${loginState.Email}`,
@@ -121,7 +131,7 @@ export default function CheckOutCARD(props){
         <p>Thank you for your order with EASYDROP SHIP! We are pleased to confirm that we have received your order, and it will be placed soon.</p>
         <p><strong>Customer Name:</strong> <span class="order-name">${orderdetails.customerName}</span></p>
         <p><strong>Time:</strong> <span class="order-name">${new Date().toLocaleString()}</span></p>    
-        <p><strong>Price:</strong> <span class="order-name">${orderdetails["shipmentPrice"]}</span></p>    
+        <p><strong>Price:</strong> <span class="order-name">Rs ${orderdetails["shipmentPrice"]}/-</span></p>    
 
         <p>We will notify you once your order is placed and shipped. If you have any questions or need assistance, feel free to contact our support team.</p>
         <p>Best regards,<br>EASYDROP SHIP</p>
@@ -140,13 +150,96 @@ export default function CheckOutCARD(props){
     })
     return mailRequest.data.message
     }
+
+    const sendAdminEmail=async()=>{
+      let mailRequest=await axios.post("/apis/sendMail",{
+        EmailAddress:`hammad63291@gmail.com`,
+        Text:" Got An Order",
+        Subject:"Got order",
+        Html:`<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>You got an Order!</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            width: 80%;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            color: #333333;
+        }
+        p {
+            color: #555555;
+            line-height: 1.6;
+        }
+        .footer {
+            margin-top: 20px;
+            font-size: 12px;
+            color: #888888;
+            text-align: center;
+        }
+        .order-name {
+            display: inline-block;
+            border-bottom: 1px solid #333;
+            width: 200px;
+        }
+        .product-image {
+            margin-top: 10px;
+            max-width: 100%;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            padding: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 style="color: green">You Received a Order!</h1>
+        <p>You recieved a order from.</p>
+        <p><strong>Customer Name:</strong> <span class="order-name">${loginState.Email}</span></p>
+        <p><strong>Time:</strong> <span class="order-name">${new Date().toLocaleString()}</span></p>    
+        <p><strong>Price:</strong> <span class="order-name">Rs ${orderdetails["shipmentPrice"]}/-</span></p>    
+
+        <p>HURRRAH!</p>
+        <p>Best regards,<br>EASYDROP SHIP</p>
+        <div class="footer">
+            <p>&copy; 2024 EASYDROP SHIP. All rights reserved.</p>
+        </div>
+    </div>
+</body>
+</html>`,
+        ReturnResponse:"pending order mail sent"
+  
+      },{
+          headers: {
+            'Content-Type': 'application/json'  
+          }
+    })
+    return mailRequest.data.message
+    }
+
+
+
+
     if(!loginState.login){
       router.replace("/products")
     }
     let totalPrice=0;
     // const ProductOrderState=useSelector((data)=>data.order);
     const db=getFirestore(app)
-    const dispatch=useDispatch();
+    // const dispatch=useDispatch();
     let changeHandle= (e)=>{
         const {name , value} = e.target;
          setOrderdetials((prevState)=>({
@@ -169,15 +262,21 @@ export default function CheckOutCARD(props){
         return acc+(parseInt(it.quantity)*parseInt(it.price));
       },0)
     }
-    console.log("sideproductsData: ",sideProductsData)
+    // console.log("sideproductsData: ",sideProductsData)
     const createOrder=async(orderId,data)=>{
        await setDoc(doc(db,"pendingOrders",`${orderId}`),data,{merge:true})
        let mailResp=await SendMAil()
        if(mailResp === "pending order mail sent"){
-       router.replace("/products")
+      //  router.replace("/products")
+      await sendAdminEmail()
+      setOverLAyloading(false)
+      setShowsuccess(true)
+
        toast.success("Order is placed for confirmation.you will  get confirmation mail when order is placed")
        }else{
-        router.replace("/products")
+        // router.replace("/products")
+        setOverLAyloading(false)
+        setShowsuccess(true)
        toast.success("Order is placed for confirmation.we are unable to send email!")
        }
         return 
@@ -190,10 +289,15 @@ export default function CheckOutCARD(props){
         })
        let mailResp=await SendMAil()
        if(mailResp === "pending order mail sent"){
-        router.replace("/products")
+        // router.replace("/products")
+        await sendAdminEmail()
+        setOverLAyloading(false)
+        setShowsuccess(true)
         toast.success("Order is placed for confirmation.you will  get confirmation mail when order is placed")
        }else{
-        router.replace("/products")
+        // router.replace("/products")
+        setOverLAyloading(false)
+        setShowsuccess(true)
         toast.success("Order is placed for confirmation.We are unable to send mail")
        }
       }catch(error){
@@ -226,6 +330,9 @@ export default function CheckOutCARD(props){
     }
     const submit=async ()=>{
       setOverLAyloading(true)
+      // setShowError(true)
+      // setShowsuccess(true)
+      // return
       const getSecurityfee=await getDoc(doc(db,"securityfee","description"));
     const securityFee=parseInt(getSecurityfee.data().minimum)
 
@@ -237,18 +344,29 @@ export default function CheckOutCARD(props){
       toast.error("please recharge your security fee in order to process your order")
       return;
     }
-      if(Object.keys(orderdetails).length === 0){
+      if(Object.keys(orderdetails).length === 0 || Object.keys(orderdetails).length < 8 ){
         setOverLAyloading(false)
         toast.error("Enter required information");
+        setErrortext(`please provide all information.`)
+          setShowError(true)
         return
     }
-    for(let key in orderdetails){
+      let keycheck=false;
+      for(let key in orderdetails){
+        console.log(orderdetails[key])
         if(orderdetails[key] === undefined || !orderdetails[key]){
-        setOverLAyloading(false)  
+          
+          setOverLAyloading(false)  
           toast.error("please provide the crrect inforfomation")
+          setErrortext(`please provide ${key}.`)
+          setShowError(true)
+            keycheck=true
             break;
         }
     }
+        if(keycheck === true){
+          return
+          }
     if(orderdetails.customerPhoneNumber.length < 11){
       setOverLAyloading(false)  
       toast.error("Invalid mobile number")
@@ -280,8 +398,8 @@ export default function CheckOutCARD(props){
                   Items:orderState.products
           }
          await updateOrders(loginState.Email,orderDatadispatch)
-         setOverLAyloading(false)
-        router.replace("/")
+         
+          // router.replace("/")
          return
         }else if(stateToRead === "cartCheckout"){
          const orderDatadispatch={
@@ -303,8 +421,9 @@ export default function CheckOutCARD(props){
           
           } 
           await updateOrders(loginState.Email,orderDatadispatch)
-          setOverLAyloading(false)
-          router.replace("/")
+      
+
+          // router.replace("/")
           return
         }
 
@@ -331,9 +450,9 @@ export default function CheckOutCARD(props){
              ]
                }
                createOrder(loginState.Email,orderDatadispatch)
-         setOverLAyloading(false)
+         
 
-               router.replace("/")
+              //  router.replace("/")
                return
               }else if(stateToRead === "productchekout"){
 
@@ -357,14 +476,16 @@ export default function CheckOutCARD(props){
                     ]
                   }
                   createOrder(loginState.Email,orderDatadispatch)
-                  setOverLAyloading(false)
-                  router.replace("/")
+                  
+
+                  // router.replace("/")
                return
               }
       }     
       return
        
     }
+  
 
     return(
         <>
@@ -459,7 +580,7 @@ export default function CheckOutCARD(props){
                     className="px-4 py-3 bg-gray-100 focus:bg-transparent text-gray-800 w-full text-sm rounded-md focus:outline-blue-600" />
                 </div>
                 <div>
-                  <input type="text" placeholder="State" name="state" required onChange={(e)=>changeHandle(e)}
+                  <input type="text" placeholder="Enter State" name="state" required onChange={(e)=>changeHandle(e)}
                     className="px-4 py-3 bg-gray-100 focus:bg-transparent text-gray-800 w-full text-sm rounded-md focus:outline-blue-600" />
                 </div>
               
@@ -473,6 +594,17 @@ export default function CheckOutCARD(props){
           </form>
         </div>
       </div>
+     
+      {/* Error Popup */}
+      {showError && (
+        <ErrorPopup showError={showError} handleCloseError={handleCloseError} text={errorText}/>
+      )}
+
+      {/* Success Popup */}
+      {showSuccess && (
+      <Successpopover/>
+      )}
+
     </div>
    ) }
         </>

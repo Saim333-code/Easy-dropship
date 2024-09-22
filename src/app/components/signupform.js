@@ -27,6 +27,18 @@ const SubmitForm=async (e)=>{
     setIsloading(false)
     return
   }
+       if(userDataLength !==0 && (userData.question1 === undefined || userData.question2 === undefined || userData.question3 === undefined)){
+    
+        toast.error("please answer all questions")
+        setIsloading(false)
+        return
+      }
+      if(userDataLength !==0 && (userData.question1.length < 5 || userData.question2.length < 5 || userData.question3.length < 5)){
+        toast.error("please answer all questions")
+        setIsloading(false)
+        return
+    }
+
   if(userDataLength !==0 && (userData.Password === undefined || userData.Password.length < 8)){
     setIsloading(false)
     toast.error("Please provide required information")
@@ -246,6 +258,54 @@ const SubmitForm=async (e)=>{
           onChange={(e) => changeHandle(e)}
         />
       </div>
+        {/* Question 1 */}
+        <div className="mb-4">
+          <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="dropshippingDefinition">
+          What&apos;s a dropshipper&apos;s responsibility in dropshipping?
+          </label>
+          <textarea
+            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+            id="dropshippingDefinition"
+            name="question1"
+            placeholder="Explain responsibilities of a dropshipper..."
+            required
+            rows="4"
+            onChange={(e) => changeHandle(e)}
+          ></textarea>
+        </div>
+
+        {/* Question 2 */}
+        <div className="mb-4">
+          <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="returnOrderManagement">
+            If return orders are increasing, what would be the things to look out for and change (as a dropshipper)?
+          </label>
+          <textarea
+            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+            id="returnOrderManagement"
+            name="question2"
+            placeholder="Describe your approach to managing return orders..."
+            required
+            rows="4"
+            onChange={(e) => changeHandle(e)}
+          ></textarea>
+        </div>
+
+        {/* Question 3 */}
+        <div className="mb-4">
+          <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="easydropshipRequirements">
+            As a dropship supplier, what are the requirements for EasyDropship to fulfill and what are things that Dropshippers have to work on?
+          </label>
+          <textarea
+            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+            id="easydropshipRequirements"
+            name="question3"
+            placeholder="Detail the process and requirements for EasyDropship..."
+            required
+            rows="4"
+            onChange={(e) => changeHandle(e)}
+          ></textarea>
+        </div>
+
 
       <div className="flex items-center justify-between">
         <button
